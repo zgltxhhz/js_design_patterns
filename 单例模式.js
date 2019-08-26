@@ -5,7 +5,6 @@
 // 确保只有一个实例，并提供全局访问
 
 // 实现：
-// 假设要设置一个管理员，多次调用也仅设置一次，可以使用闭包缓存一个内部变量来实现
 
 class SetManager {
     constructor(name) {
@@ -14,7 +13,7 @@ class SetManager {
 }
 
 SetManager.prototype.getName = function () {
-    // console.log(this.manager)
+    console.log(this.manager)
 }
 
 let SingletonSetManager = (function(){
@@ -27,9 +26,48 @@ let SingletonSetManager = (function(){
 })()
 
 // console.log(SingletonSetManager())
-SingletonSetManager('a').getName()
-SingletonSetManager('b').getName()
-SingletonSetManager('c').getName()
+// SingletonSetManager('a')
+// SingletonSetManager('b')
+// SingletonSetManager('c')
+
+function getSingleton(fn) {
+    let instance = null
+    return function () {
+        if (!instance) {instance = fn.apply(this, arguments)}
+        return instance
+    }
+}
+
+let managerSingleton = getSingleton(function(name){
+    let manager = new SetManager(name)
+    return manager
+})
+
+managerSingleton('a').getName()
+managerSingleton('b').getName()
+managerSingleton('c').getName()
+
+
+
+
+
+
+
+// function fn() {
+//     let a = null
+//     return function (b) {
+//         console.log(a)
+//         if (!a) { a = b}
+//         return a
+//     }
+// }
+
+// let fns = fn()
+// fns(1)
+// fns(2)
+// fns(3)
+
+
 
 
 
