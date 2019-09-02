@@ -40,6 +40,18 @@ let Books = function (id, name, price) {
     this.setPrice(price)
 }
 
+// 公有方法：
+    // 1. 公有方法可以在类的外部被调用
+    // 2. 不可以访问类的私有属性
+    // 3. 公有方法必须在类的内部或者外部通过类的prototype属性添加
+
+// 私有方法：
+    // 私有方法本身是可以访问类内部的所有属性的，即私有属性和公有属性
+    // 但是私有方法是不可以在类的外部被调用
+
+// 特权方法：
+    // 特权方法是可以在类的外部被调用
+
 // let books = new Books(1, '深入浅出node.js', 120)
 // console.log(books.setName('hhh'))
 
