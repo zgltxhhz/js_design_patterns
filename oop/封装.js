@@ -75,11 +75,71 @@ let books = new Books(1, '深入浅出node.js', 120)
 // 想要在新创建的对象中使用isChinese就要通过Books类使用而不能通过this
 
 
-console.log(books.isJsBook)
-// console.log(Books.prototype)
+// console.log(books.isChinese)
+// console.log(Books.isChinese)
+
+// 在prototype上添加的属性和方法实例化对象都可以访问，因为它们指向的是同一个对象
+
+// console.log(Books.prototype.isJsBook)
+
+// 闭包实现：
+// 通过闭包实现类的静态变量
+let Book2 = (function () {
+    // 静态私有变量
+    let bookNum = 0
+    // 静态私有方法
+    function checkBook(){}
+
+    // 返回构造函数
+    return function (id, name, price){
+        // 私有变量
+        let newName, newPrice
+        // 私有方法
+        function checkID(id){}
+        // 特权方法
+        this.getName = function () {} 
+        this.getPrice = function () {}
+        this.setName = function () {}
+        this.setPrice = function () {}
+        // 公有属性
+        this.id = id
+        // 公有方法
+        this.copy = function () {}
+        bookNum++
+        if (bookNum>100) {
+            throw new Error('已售完')
+        }
+        // 构造器
+        this.setName(name)
+        this.setPrice(price)
+    }
+})()
+
+Book2.prototype = {
+    // 静态公有属性
+    isJsBook: true,
+    // 静态公有方法
+    display: function () {}
+}
+
+// console.log(Book2)
 
 
 
+// 检察长————创建对象的安全模式（防止实例化时new遗忘）
+
+let NewBook = function(title, time, type) {
+    if (this instanceof NewBook) {
+        this.title = title
+        this.time = time
+        this.type = type
+    } else {
+        return new NewBook(title, time, type)
+    }
+}
+
+let _book = NewBook('javascript', '2018', 'js')
+console.log(_book) // 缺少new，但仍然是构造函数实例化出来的对象
 
 
   
